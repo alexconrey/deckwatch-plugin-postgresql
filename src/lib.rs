@@ -216,6 +216,7 @@ pub fn provision_inner(req: &ResourceProvisionRequest) -> ResourceProvisionResul
         port: Some(PG_PORT),
         cpu: Some("100m".into()),
         memory: Some("256Mi".into()),
+        ..Default::default()
     });
 
     // Create the PVC for data persistence.
@@ -235,6 +236,7 @@ pub fn deprovision_inner(_req: &ResourceDeprovisionRequest) -> ResourceDeprovisi
     ResourceDeprovisionResult {
         errors: vec![],
         message: "PostgreSQL sidecar will be removed from all application deployments on the next reconcile. The PersistentVolumeClaim is NOT deleted automatically — delete it manually if the data is no longer needed.".into(),
+        ..Default::default()
     }
 }
 
@@ -263,6 +265,7 @@ pub fn metadata() -> FnResult<Json<PluginMetadata>> {
             env_source: None,
         }],
         resources: vec![resource_decl()],
+        ..Default::default()
     }))
 }
 
@@ -303,6 +306,7 @@ mod tests {
                 .iter()
                 .map(|(k, v)| (k.to_string(), v.to_string()))
                 .collect(),
+            ..Default::default()
         }
     }
 
@@ -313,6 +317,7 @@ mod tests {
             resource_id: "database".into(),
             state: HashMap::new(),
             fields: HashMap::new(),
+            ..Default::default()
         }
     }
 
